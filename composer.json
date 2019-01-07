@@ -1,0 +1,61 @@
+{
+    "name": "pionyr/pionyr-cz-client-php5",
+    "description": "PHP 5.6 compatible API Client for API provided by Pionyr.cz",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ondřej Machulda",
+            "email": "ondrej.machulda@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Pionyr\\PionyrCz\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pionyr\\PionyrCz\\": "tests/unit/",
+            "Pionyr\\PionyrCz\\IntegrationTests\\": "tests/integration/"
+        }
+    },
+    "require": {
+        "php": "^5.6",
+        "ext-json": "*",
+        "beberlei/assert": "^2.9",
+        "fig/http-message-util": "^1.1",
+        "myclabs/php-enum": "^1.6",
+        "pascaldevink/shortuuid": "^1.0",
+        "php-http/client-common": "^1.6",
+        "php-http/discovery": "^1.4",
+        "php-http/httplug": "^1.1",
+        "php-http/message-factory": "^1.0.2",
+        "ramsey/uuid": "^3.7"
+    },
+    "require-dev": {
+        "php-http/guzzle6-adapter": "^1.1",
+        "php-http/message": "^1.6",
+        "php-http/mock-client": "^1.1",
+        "php-mock/php-mock-phpunit": "^1.1",
+        "phpunit/phpunit": "^5.7.10",
+        "symfony/var-dumper": "^3.3"
+    },
+    "scripts": {
+        "all": [
+            "@analyze",
+            "@test"
+        ],
+        "analyze": [
+        ],
+        "test": [
+            "./vendor/bin/phpunit --colors=always"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "5.6.30"
+        }
+    }
+}

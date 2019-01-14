@@ -3,6 +3,7 @@
 namespace Pionyr\PionyrCz\RequestBuilder;
 
 use Pionyr\PionyrCz\Constants\EventCategory;
+use Pionyr\PionyrCz\Constants\EventLocalization;
 use Pionyr\PionyrCz\Entity\EventPreview;
 use Pionyr\PionyrCz\Http\Response\EventsResponse;
 
@@ -13,6 +14,10 @@ class EventsRequestBuilder extends AbstractRequestBuilder
     protected $page;
     /** @var EventCategory|null */
     protected $category;
+    /** @var EventLocalization|null */
+    protected $localization;
+    /** @var bool */
+    protected $onlyByUnitAndSubunits = false;
     /** @var \DateTimeInterface|null */
     protected $dateFrom;
     /** @var \DateTimeInterface|null */
@@ -28,6 +33,24 @@ class EventsRequestBuilder extends AbstractRequestBuilder
     public function setCategory(EventCategory $category = null)
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function setLocalization(EventLocalization $localization = null)
+    {
+        $this->localization = $localization;
+
+        return $this;
+    }
+
+    /**
+     * Only list events organized by current unit (whose token is used to access the data) or by its subunits.
+     * @param mixed $onlyByUnitAndSubunits
+     */
+    public function onlyByUnitAndSubunits($onlyByUnitAndSubunits = true)
+    {
+        $this->onlyByUnitAndSubunits = $onlyByUnitAndSubunits;
 
         return $this;
     }
@@ -59,6 +82,12 @@ class EventsRequestBuilder extends AbstractRequestBuilder
         }
         if ($this->category !== null) {
             $params['kategorie'] = $this->category->getValue();
+        }
+        if ($this->localization !== null) {
+            $params['lokalizace'] = $this->localization->getValue();
+        }
+        if ($this->onlyByUnitAndSubunits === true) {
+            $params['krajske'] = '1';
         }
         if ($this->dateFrom !== null) {
             $params['datumOd'] = $this->dateFrom->format('Y-m-d');

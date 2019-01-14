@@ -32,11 +32,11 @@ class ArticlesRequestBuilderTest extends TestCase
     }
 
     /** @test */
-    public function shouldSendRequestWithPageNumberAndCategory()
+    public function shouldSendRequestWithPageNumberAndCategoryAndOnlyRegional()
     {
         $requestManagerMock = $this->createMock(RequestManager::class);
-        $requestManagerMock->expects($this->once())->method('sendRequest')->with(RequestMethodInterface::METHOD_GET, '/clanky/', ['stranka' => 333, 'kategorie' => ArticleCategory::VZDELAVANI])->willReturn(new Response(200, [], file_get_contents(__DIR__ . '/../Http/Fixtures/articles-response.json')));
+        $requestManagerMock->expects($this->once())->method('sendRequest')->with(RequestMethodInterface::METHOD_GET, '/clanky/', ['stranka' => 333, 'kategorie' => ArticleCategory::VZDELAVANI, 'krajske' => '1'])->willReturn(new Response(200, [], file_get_contents(__DIR__ . '/../Http/Fixtures/articles-response.json')));
         $builder = new ArticlesRequestBuilder($requestManagerMock);
-        $builder->setPage(333)->setCategory(ArticleCategory::VZDELAVANI)->send();
+        $builder->setPage(333)->setCategory(ArticleCategory::VZDELAVANI)->onlyRegional()->send();
     }
 }

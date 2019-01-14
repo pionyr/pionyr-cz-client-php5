@@ -6,6 +6,7 @@ use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Pionyr\PionyrCz\Constants\EventCategory;
+use Pionyr\PionyrCz\Constants\EventLocalization;
 use Pionyr\PionyrCz\Entity\EventPreview;
 use Pionyr\PionyrCz\Http\RequestManager;
 use Pionyr\PionyrCz\Http\Response\EventsResponse;
@@ -35,8 +36,8 @@ class EventsRequestBuilderTest extends TestCase
     public function shouldSendRequestWithPageNumberAndCategoryAndDateFromAndDateTo()
     {
         $requestManagerMock = $this->createMock(RequestManager::class);
-        $requestManagerMock->expects($this->once())->method('sendRequest')->with(RequestMethodInterface::METHOD_GET, '/akce/', ['stranka' => 333, 'kategorie' => EventCategory::TABOR, 'datumOd' => '2018-09-01', 'datumDo' => '2018-12-31'])->willReturn(new Response(200, [], file_get_contents(__DIR__ . '/../Http/Fixtures/events-response.json')));
+        $requestManagerMock->expects($this->once())->method('sendRequest')->with(RequestMethodInterface::METHOD_GET, '/akce/', ['stranka' => 333, 'kategorie' => EventCategory::TABOR, 'krajske' => '1', 'datumOd' => '2018-09-01', 'datumDo' => '2018-12-31', 'lokalizace' => '2'])->willReturn(new Response(200, [], file_get_contents(__DIR__ . '/../Http/Fixtures/events-response.json')));
         $builder = new EventsRequestBuilder($requestManagerMock);
-        $builder->setPage(333)->setCategory(EventCategory::TABOR())->setDateFrom(new \DateTime('2018-09-01'))->setDateTo(new \DateTime('2018-12-31'))->send();
+        $builder->setPage(333)->setCategory(EventCategory::TABOR())->setLocalization(EventLocalization::NATIONWIDE())->onlyByUnitAndSubunits()->setDateFrom(new \DateTime('2018-09-01'))->setDateTo(new \DateTime('2018-12-31'))->send();
     }
 }
